@@ -1,6 +1,6 @@
 #pragma once
-#include <SFML/Window.hpp>
 #include <SFML/Graphics.hpp>
+#include "EventController.h"
 
 class App final
 {
@@ -10,5 +10,5 @@ public:
 	void init();
 	void run();
 	sf::RenderWindow window;
-
+	EventController eventController;
 };
