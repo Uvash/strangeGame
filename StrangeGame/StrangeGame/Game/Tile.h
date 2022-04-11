@@ -16,6 +16,7 @@ public:
 	~Tile() = default;
 	bool setPawn(std::weak_ptr<InGamePawn> pawn);
 	bool clearPawn();
+	bool isFree() const;
 private:
 	sf::Vector2i coordinats;
 	GameColor gameColor;
@@ -34,4 +35,6 @@ public:
 		std::swap(lhs.gameColor, rhs.gameColor);
 		std::swap(lhs.pPawn, rhs.pPawn);
 	}
+
+	char getTileCode(); //для показа в консоль, удалить если не надо.
 };

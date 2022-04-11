@@ -23,10 +23,12 @@ public:
 	void connectToPawns(std::vector<std::shared_ptr<InGamePawn>> pawnList);
 
 	bool addPawnInGame(sf::Vector2i coordinats, GameColor color);
+	bool checkMove(sf::Vector2i position, sf::Vector2i target);
 private:
 	GameController& gameController;
 	std::weak_ptr<InGameTileMap> inGameTileMap;
 	std::vector<std::weak_ptr<InGamePawn>> inGamePawns;
-
+public:
+	void AddPawnsAtMap();
 
 };

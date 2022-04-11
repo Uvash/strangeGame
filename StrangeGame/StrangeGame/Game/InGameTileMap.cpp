@@ -1,4 +1,6 @@
 #include "stdafx.h"
+#include <iostream>		//для печатанья карты в консоль
+#include <cstdlib>		//для печатанья карты в консоль
 #include "InGameTileMap.h"
 #include "Tile.h"
 
@@ -9,10 +11,15 @@ InGameTileMap::InGameTileMap(sf::Vector2i newSize) : size{ newSize }
 	
 	sf::Vector2i gameCoords{0, 0};
 	int maxColor = static_cast<int>(GameColor::maxColor); //Расплата за enum class
+	int minColor = static_cast<int>(GameColor::minColor);
+	int currentColor = minColor;
 
 	for (size_t i = 0; i < tiles.size(); i++)
 	{
-		Tile t = Tile{ TileAddresToV2i(i),  static_cast<GameColor>(i % maxColor) };
+
+		currentColor = (i + (i / size.x) % maxColor) % maxColor; //определяем чётность строки и добавляем в качестве смещения
+
+		Tile t = Tile{ TileAddresToV2i(i),  static_cast<GameColor>(currentColor) };
 		tiles[i] = t;
 	}
 
@@ -30,7 +37,12 @@ bool InGameTileMap::addPawnAtMap(std::weak_ptr<InGamePawn> pawn, sf::Vector2i ta
 
 	int tileAddres = v2iToTileAddres(targetTile);
 
-	return tiles[tileAddres].setPawn(pawn);
+	if (tiles[tileAddres].setPawn(pawn))
+	{
+		pawns.push_back(pawn);
+		return true;
+	}
+	return false;
 }
 
 int InGameTileMap::v2iToTileAddres(sf::Vector2i vec2i)
@@ -54,4 +66,17 @@ const Tile& InGameTileMap::getTile(int tileAddres)
 {
 	assert(tiles.size() > tileAddres);
 	return tiles[tileAddres];
+}
+
+void InGameTileMap::printMap()
+{
+	std::system("cls");
+	for (int i = 0; i < tiles.size(); i++)
+	{
+		if (i % size.x == 0)
+			std::cout << std::endl;
+
+		
+		std::cout << tiles[i].getTileCode();
+	}
 }

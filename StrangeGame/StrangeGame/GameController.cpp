@@ -16,10 +16,13 @@ GameController::~GameController()
 
 void GameController::init()
 {
-	tileMap = std::make_shared<InGameTileMap>(sf::Vector2i{ 4, 4 });
+	tileMap = std::make_shared<InGameTileMap>(sf::Vector2i{ 8, 8 });
 	gameMode = std::make_shared<GameMode>(*this);
 	gameMode->connectToTileMap(tileMap);
 	gameMode->connectToPawns(pawnList);
+	gameMode->AddPawnsAtMap();
+	bool f = gameMode->checkMove({5,5}, {5,6});
+	tileMap->printMap();
 }
 
 void GameController::GameStep()

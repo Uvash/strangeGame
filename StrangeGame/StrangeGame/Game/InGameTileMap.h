@@ -27,4 +27,6 @@ private:
 public:
 	const Tile& getTile(sf::Vector2i vec2i);
 	const Tile& getTile(int tileAddres);
+
+	void printMap();
 };

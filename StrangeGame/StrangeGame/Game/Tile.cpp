@@ -23,6 +23,7 @@ bool Tile::setPawn(std::weak_ptr<InGamePawn> pawn)
 	pPawn = pawn;
 	auto sharedPawn = pawn.lock();
 	sharedPawn->setNewCoordinats(coordinats);
+	return true;
 }
 
 bool Tile::clearPawn()
@@ -38,7 +39,12 @@ bool Tile::clearPawn()
 	}
 	return false;
 }
-
+bool Tile::isFree() const
+{
+	if (pPawn.expired())
+		return true;
+	return false;
+}
 Tile::Tile(const Tile& other) : coordinats{ other.coordinats }, gameColor{ other.gameColor }, pPawn {other.pPawn}
 {
 
@@ -61,4 +67,21 @@ Tile& Tile::operator= (Tile&& that) noexcept
 {
 	swap(*this, that);
 	return *this;
+}
+
+char Tile::getTileCode()
+{
+	char temp = '0'; //смещениями заставим изменить код
+	if (gameColor == GameColor::black)
+		temp += 1;
+	if (!pPawn.expired())
+	{
+		auto sp = pPawn.lock();
+		if (sp->getGameColor() == GameColor::black)
+			temp += 4;
+		else
+			temp += 3;
+	}
+
+	return temp;
 }

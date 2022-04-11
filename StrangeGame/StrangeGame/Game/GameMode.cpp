@@ -1,8 +1,10 @@
 #include "stdafx.h"
+#include <math.h>
 #include "GameMode.h"
 #include "GameController.h"
 #include "InGameTileMap.h"
 #include "InGamePawn.h"
+#include "Tile.h"
 
 GameMode::GameMode(GameController& newGameController) : gameController{ newGameController }
 {
@@ -43,4 +45,34 @@ bool GameMode::addPawnInGame(sf::Vector2i coordinats, GameColor color)
 	}
 	
 	return false;
+}
+
+bool GameMode::checkMove(sf::Vector2i position, sf::Vector2i target)
+{
+	auto map = inGameTileMap.lock();
+	const Tile& targetTile = map->getTile(target); 
+
+	if (!targetTile.isFree()) //Нельзя ходить на тайл, если там уже кто-то есть
+		return false;
+
+	if(position == target)	//И под себя то же не стоит
+		return false;
+	
+	if (std::abs(target.x - position.x) + std::abs(target.y - position.y) <= 1) // Вычисляем дистанцию в кол-ве ходов до цели
+		return true;
+
+	return false;
+}
+
+
+void GameMode::AddPawnsAtMap() 
+{
+	//Не самое правильное решение, но если прижмёт напишем класс отвечающий за спавн...
+	addPawnInGame({ 0, 0 }, GameColor::white); addPawnInGame({ 1, 0 }, GameColor::white); addPawnInGame({ 2, 0 }, GameColor::white);
+	addPawnInGame({ 0, 1 }, GameColor::white); addPawnInGame({ 1, 1 }, GameColor::white); addPawnInGame({ 2, 1 }, GameColor::white);
+	addPawnInGame({ 0, 2 }, GameColor::white); addPawnInGame({ 1, 2 }, GameColor::white); addPawnInGame({ 2, 2 }, GameColor::white);
+
+	addPawnInGame({ 5, 5 }, GameColor::black); addPawnInGame({ 6, 5 }, GameColor::black); addPawnInGame({ 7, 5 }, GameColor::black);
+	addPawnInGame({ 5, 6 }, GameColor::black); addPawnInGame({ 6, 6 }, GameColor::black); addPawnInGame({ 7, 6 }, GameColor::black);
+	addPawnInGame({ 5, 7 }, GameColor::black); addPawnInGame({ 6, 7 }, GameColor::black); addPawnInGame({ 7, 7 }, GameColor::black);
 }
