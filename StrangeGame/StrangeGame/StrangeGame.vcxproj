@@ -118,7 +118,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\CPP_Library\SFML-2.5.1\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);C:\CPP_Library\SFML-2.5.1\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
       <PrecompiledHeader>Use</PrecompiledHeader>
     </ClCompile>
@@ -153,6 +153,11 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Use</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="EventController.cpp" />
+    <ClCompile Include="GameController.cpp" />
+    <ClCompile Include="Game\GameMode.cpp" />
+    <ClCompile Include="Game\InGameTileMap.cpp" />
+    <ClCompile Include="Game\InGamePawn.cpp" />
+    <ClCompile Include="Game\Tile.cpp" />
     <ClCompile Include="main.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Use</PrecompiledHeader>
     </ClCompile>
@@ -163,6 +168,12 @@
   <ItemGroup>
     <ClInclude Include="App.h" />
     <ClInclude Include="EventController.h" />
+    <ClInclude Include="GameController.h" />
+    <ClInclude Include="Game\GameMode.h" />
+    <ClInclude Include="Game\InGameTileMap.h" />
+    <ClInclude Include="Game\InGamePawn.h" />
+    <ClInclude Include="Game\Tile.h" />
+    <ClInclude Include="HelpGlobalStructures.h" />
     <ClInclude Include="stdafx.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
