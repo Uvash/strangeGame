@@ -16,6 +16,7 @@ public:
 	virtual ~InGameTileMap();
 
 	bool addPawnAtMap(std::weak_ptr<InGamePawn> pawn, sf::Vector2i targetTile);
+	bool swapPawns(sf::Vector2i firstTile, sf::Vector2i secondTile);
 private:
 	std::vector<Tile> tiles;
 	std::vector<std::weak_ptr<InGamePawn>> pawns;
@@ -27,6 +28,7 @@ private:
 public:
 	const Tile& getTile(sf::Vector2i vec2i);
 	const Tile& getTile(int tileAddres);
-
+	const sf::Vector2i& getSize();
+	bool inRange(const sf::Vector2i target);
 	void printMap();
 };

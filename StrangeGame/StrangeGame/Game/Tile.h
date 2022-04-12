@@ -17,6 +17,8 @@ public:
 	bool setPawn(std::weak_ptr<InGamePawn> pawn);
 	bool clearPawn();
 	bool isFree() const;
+	void swapPawns(Tile& other);
+	void updatePawnInfo();
 private:
 	sf::Vector2i coordinats;
 	GameColor gameColor;

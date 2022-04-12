@@ -45,6 +45,17 @@ bool InGameTileMap::addPawnAtMap(std::weak_ptr<InGamePawn> pawn, sf::Vector2i ta
 	return false;
 }
 
+bool InGameTileMap::swapPawns(sf::Vector2i firstTile, sf::Vector2i secondTile)
+{
+	if (firstTile == secondTile) //Ну самим с собой обменятся легко
+		return true;
+
+	int firstAddres = v2iToTileAddres(firstTile);
+	int secondAddres = v2iToTileAddres(secondTile);
+
+	tiles[firstAddres].swapPawns(tiles[secondAddres]);
+	return true;
+}
 int InGameTileMap::v2iToTileAddres(sf::Vector2i vec2i)
 {
 	assert(size.x > vec2i.x && size.y > vec2i.y);
@@ -52,7 +63,7 @@ int InGameTileMap::v2iToTileAddres(sf::Vector2i vec2i)
 }
 sf::Vector2i InGameTileMap::TileAddresToV2i(int tileAddres)
 {
-	assert(tiles.size() > tileAddres);
+	assert(tileAddres < tiles.size() && tileAddres >= 0 );
 	return sf::Vector2i{ tileAddres % size.x, tileAddres / size.x };
 }
 
@@ -66,6 +77,18 @@ const Tile& InGameTileMap::getTile(int tileAddres)
 {
 	assert(tiles.size() > tileAddres);
 	return tiles[tileAddres];
+}
+
+const sf::Vector2i& InGameTileMap::getSize()
+{
+	return size;
+}
+
+bool InGameTileMap::inRange(const sf::Vector2i target)
+{
+	if (target.x >= size.x || target.y >= size.y || target.x < 0 || target.y < 0)
+		return false;
+	return true;
 }
 
 void InGameTileMap::printMap()

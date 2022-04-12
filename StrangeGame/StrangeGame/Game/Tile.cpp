@@ -45,6 +45,22 @@ bool Tile::isFree() const
 		return true;
 	return false;
 }
+void Tile::swapPawns(Tile& other)
+{
+	std::swap(pPawn, other.pPawn);
+	updatePawnInfo();
+	other.updatePawnInfo();
+}
+
+void Tile::updatePawnInfo()
+{
+	if (!pPawn.expired())
+	{
+		auto pawn = pPawn.lock();
+		pawn->setNewCoordinats(coordinats);
+	}
+}
+
 Tile::Tile(const Tile& other) : coordinats{ other.coordinats }, gameColor{ other.gameColor }, pPawn {other.pPawn}
 {
 

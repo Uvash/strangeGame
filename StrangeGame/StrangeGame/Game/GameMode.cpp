@@ -47,23 +47,41 @@ bool GameMode::addPawnInGame(sf::Vector2i coordinats, GameColor color)
 	return false;
 }
 
-bool GameMode::checkMove(sf::Vector2i position, sf::Vector2i target)
+bool GameMode::checkMove(sf::Vector2i start, sf::Vector2i target)
 {
+	if (start == target)	//Под себя ходить мы не должны.
+		return false;
+
 	auto map = inGameTileMap.lock();
+
+	if (!map->inRange(start)) // Проверим на попытку сбежать с поля
+		return false;
+	if (!map->inRange(target))
+		return false;
+
 	const Tile& targetTile = map->getTile(target); 
+	const Tile& positionTile = map->getTile(start);
+
+	if (positionTile.isFree()) //С пустой клетки точно ни чего ходить не может
+		return false;
 
 	if (!targetTile.isFree()) //Нельзя ходить на тайл, если там уже кто-то есть
 		return false;
-
-	if(position == target)	//И под себя то же не стоит
-		return false;
 	
-	if (std::abs(target.x - position.x) + std::abs(target.y - position.y) <= 1) // Вычисляем дистанцию в кол-ве ходов до цели
+	if (std::abs(target.x - start.x) + std::abs(target.y - start.y) <= 1) // Вычисляем дистанцию в кол-ве ходов до цели
 		return true;
 
 	return false;
 }
 
+bool GameMode::movePawn(sf::Vector2i start, sf::Vector2i target)
+{
+	if (!checkMove(start, target))
+		return false;
+
+	auto map = inGameTileMap.lock();
+	map->swapPawns(start, target);
+}
 
 void GameMode::AddPawnsAtMap() 
 {
