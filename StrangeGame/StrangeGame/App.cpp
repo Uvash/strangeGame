@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "App.h"
 
-App::App() : window{ sf::VideoMode(800, 600), "StrangeGame" } , eventController(window)
+App::App() : window{ sf::VideoMode(800, 600), "StrangeGame" } , eventController(window), renderController(window)
 {
 
 }
@@ -14,6 +14,7 @@ App::~App()
 void App::init()
 {
     gameController.init(eventController);
+    renderController.init();
 }
 
 void App::run()
@@ -22,8 +23,7 @@ void App::run()
     {
         eventController.catchEvents();
         gameController.GameStep();
+        renderController.updateScreen();
 
-        window.clear(sf::Color::Black);
-        window.display();
     }
 }

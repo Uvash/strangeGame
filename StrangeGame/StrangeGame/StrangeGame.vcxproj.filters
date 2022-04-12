@@ -60,6 +60,9 @@
     <ClCompile Include="Game\Players\HumanPlayer.cpp">
       <Filter>Исходные файлы\Game\Players</Filter>
     </ClCompile>
+    <ClCompile Include="RenderController.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="App.h">
@@ -94,6 +97,9 @@
     </ClInclude>
     <ClInclude Include="Game\Players\HumanPlayer.h">
       <Filter>Файлы заголовков\Game\Players</Filter>
+    </ClInclude>
+    <ClInclude Include="RenderController.h">
+      <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

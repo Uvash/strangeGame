@@ -163,6 +163,7 @@
     <ClCompile Include="main.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Use</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="RenderController.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
     </ClCompile>
@@ -178,6 +179,7 @@
     <ClInclude Include="Game\Players\HumanPlayer.h" />
     <ClInclude Include="Game\Tile.h" />
     <ClInclude Include="HelpGlobalStructures.h" />
+    <ClInclude Include="RenderController.h" />
     <ClInclude Include="stdafx.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
