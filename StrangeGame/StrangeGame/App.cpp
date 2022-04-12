@@ -13,7 +13,7 @@ App::~App()
 
 void App::init()
 {
-    gameController.init();
+    gameController.init(eventController);
 }
 
 void App::run()

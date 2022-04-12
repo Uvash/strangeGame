@@ -19,6 +19,12 @@
     <Filter Include="Файлы заголовков\Game">
       <UniqueIdentifier>{885f0939-3731-46d7-8583-307529753487}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Файлы заголовков\Game\Players">
+      <UniqueIdentifier>{e88fe85e-8373-4e1e-a726-23111845c50d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\Game\Players">
+      <UniqueIdentifier>{2facdb9b-3896-4395-a85e-1f242c88d108}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -48,6 +54,12 @@
     <ClCompile Include="Game\Tile.cpp">
       <Filter>Исходные файлы\Game</Filter>
     </ClCompile>
+    <ClCompile Include="Game\APlayer.cpp">
+      <Filter>Исходные файлы\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Players\HumanPlayer.cpp">
+      <Filter>Исходные файлы\Game\Players</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="App.h">
@@ -76,6 +88,12 @@
     </ClInclude>
     <ClInclude Include="HelpGlobalStructures.h">
       <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\APlayer.h">
+      <Filter>Файлы заголовков\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Players\HumanPlayer.h">
+      <Filter>Файлы заголовков\Game\Players</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

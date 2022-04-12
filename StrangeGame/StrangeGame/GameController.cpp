@@ -14,20 +14,22 @@ GameController::~GameController()
 
 }
 
-void GameController::init()
+void GameController::init(EventController& newEventController)
 {
 	tileMap = std::make_shared<InGameTileMap>(sf::Vector2i{ 8, 8 });
-	gameMode = std::make_shared<GameMode>(*this);
+	gameMode = std::make_shared<GameMode>(*this, newEventController);
 	gameMode->connectToTileMap(tileMap);
 	gameMode->connectToPawns(pawnList);
 	gameMode->AddPawnsAtMap();
-	bool f = gameMode->checkMove({5,5}, {5,6});
+	gameMode->addPlayers();
+	tileMap->printMap();
+	gameMode->movePawn({ 5, 5 }, { 5, 4 });
 	tileMap->printMap();
 }
 
 void GameController::GameStep()
 {
-
+	gameMode->tick();
 }
 
 void GameController::registredNewPawn(std::shared_ptr<InGamePawn> pawn)

@@ -5,15 +5,11 @@
 #include "InGameTileMap.h"
 #include "InGamePawn.h"
 #include "Tile.h"
+#include "Players/HumanPlayer.h"
 
-GameMode::GameMode(GameController& newGameController) : gameController{ newGameController }
-{
+GameMode::GameMode(GameController& newGameController, EventController& NewEventController) :	gameController{ newGameController }, eventController{ NewEventController } {}
 
-}
-
-GameMode::~GameMode()
-{
-}
+GameMode::~GameMode() {}
 
 void GameMode::connectToTileMap(std::shared_ptr<InGameTileMap> tileMap)
 {
@@ -83,6 +79,12 @@ bool GameMode::movePawn(sf::Vector2i start, sf::Vector2i target)
 	map->swapPawns(start, target);
 }
 
+void GameMode::addPlayers()
+{
+	auto humPlayer = std::make_shared<HumanPlayer>(GameColor::white, eventController, inGameTileMap);
+	players.push_back(std::static_pointer_cast<APlayer>(humPlayer));
+}
+
 void GameMode::AddPawnsAtMap() 
 {
 	//Не самое правильное решение, но если прижмёт напишем класс отвечающий за спавн...
@@ -93,4 +95,14 @@ void GameMode::AddPawnsAtMap()
 	addPawnInGame({ 5, 5 }, GameColor::black); addPawnInGame({ 6, 5 }, GameColor::black); addPawnInGame({ 7, 5 }, GameColor::black);
 	addPawnInGame({ 5, 6 }, GameColor::black); addPawnInGame({ 6, 6 }, GameColor::black); addPawnInGame({ 7, 6 }, GameColor::black);
 	addPawnInGame({ 5, 7 }, GameColor::black); addPawnInGame({ 6, 7 }, GameColor::black); addPawnInGame({ 7, 7 }, GameColor::black);
+}
+
+void GameMode::tick()
+{
+	sf::Vector2i start;
+	sf::Vector2i finish;
+	if (players[0]->makeMove(start, finish) == gameMoveStatus::move)
+	{
+		movePawn(start, finish);
+	}
 }

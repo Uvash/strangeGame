@@ -10,6 +10,7 @@ void EventController::catchEvents()
 {
     if (window.isOpen())
     {
+        gameEvents.lastClick = { 0 , 0 };
         sf::Event event;
         while (window.pollEvent(event))
         {
@@ -21,7 +22,7 @@ void EventController::catchEvents()
                     {
                         if (event.mouseButton.button == sf::Mouse::Left)
                         {
-                            gameEvents.lastClick = sf::Vector2i{ event.mouseButton.x, event.mouseButton.y };
+                            gameEvents.lastClick = { event.mouseButton.x, event.mouseButton.y };
                         }
                         break;
                     }

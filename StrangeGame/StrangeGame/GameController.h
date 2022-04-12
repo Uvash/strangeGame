@@ -5,15 +5,17 @@
 #include <memory>
 #include <vector>
 
+class EventController;
 class InGameTileMap;
 class InGamePawn;
 class GameMode;
+
 class GameController final
 {
 public:
 	GameController();
 	~GameController();
-	void init();
+	void init(EventController & newEventController);
 	void GameStep();
 
 	void registredNewPawn(std::shared_ptr<InGamePawn> pawn);
