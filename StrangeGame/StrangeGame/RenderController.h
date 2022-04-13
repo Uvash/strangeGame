@@ -4,6 +4,9 @@
 */
 #include <vector>
 #include <SFML/Graphics.hpp>
+class GameController;
+class TileMap;
+class Pawn;
 enum textureName
 {
 	whiteTile = 0,
@@ -15,13 +18,17 @@ enum textureName
 class RenderController final
 {
 public:
-	RenderController(sf::RenderWindow& newWindow);
+	RenderController(sf::RenderWindow& newWindow, GameController& newGameController);
 	~RenderController();
 	void init();
 	void updateScreen();
 private:
 	void loadTexture();
+	sf::Vector2f scale;
+	GameController& gameController;
 	sf::RenderWindow& window;
-	std::vector<sf::Texture> textures;
-	std::vector<sf::Sprite> sprites;
+	sf::Image inputImage;
+
+	std::shared_ptr<TileMap> tileMap;
+	std::vector<std::shared_ptr<Pawn>> & pawnList;
 };

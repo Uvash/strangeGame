@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "App.h"
 
-App::App() : window{ sf::VideoMode(800, 600), "StrangeGame" } , eventController(window), renderController(window)
+App::App() : window{ sf::VideoMode(800, 600), "StrangeGame" } , eventController(window), renderController(window, gameController)
 {
 
 }

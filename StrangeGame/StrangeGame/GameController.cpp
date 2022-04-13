@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "GameController.h"
-#include "Game/InGameTileMap.h"
-#include "Game/InGamePawn.h"
+#include "TileMap.h"
+#include "Pawn.h"
 #include "Game/GameMode.h"
 
 GameController::GameController()
@@ -16,15 +16,12 @@ GameController::~GameController()
 
 void GameController::init(EventController& newEventController)
 {
-	tileMap = std::make_shared<InGameTileMap>(sf::Vector2i{ 8, 8 });
+	tileMap = std::make_shared<TileMap>(sf::Vector2i{ 8, 8 });
 	gameMode = std::make_shared<GameMode>(*this, newEventController);
 	gameMode->connectToTileMap(tileMap);
 	gameMode->connectToPawns(pawnList);
 	gameMode->AddPawnsAtMap();
 	gameMode->addPlayers();
-	tileMap->printMap();
-	gameMode->movePawn({ 5, 5 }, { 5, 4 });
-	tileMap->printMap();
 }
 
 void GameController::GameStep()
@@ -32,7 +29,17 @@ void GameController::GameStep()
 	gameMode->tick();
 }
 
-void GameController::registredNewPawn(std::shared_ptr<InGamePawn> pawn)
+void GameController::registredNewPawn(std::shared_ptr<Pawn> pawn)
 {
 	pawnList.push_back(pawn);
+}
+
+std::shared_ptr<TileMap>  GameController::getTileMap()
+{
+	return tileMap;
+}
+
+std::vector<std::shared_ptr<Pawn>>& GameController::getPawnList()
+{
+	return pawnList;
 }

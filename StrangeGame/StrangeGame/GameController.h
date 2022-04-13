@@ -4,10 +4,10 @@
 */
 #include <memory>
 #include <vector>
+#include "TileMap.h"
 
 class EventController;
-class InGameTileMap;
-class InGamePawn;
+class Pawn;
 class GameMode;
 
 class GameController final
@@ -18,9 +18,12 @@ public:
 	void init(EventController & newEventController);
 	void GameStep();
 
-	void registredNewPawn(std::shared_ptr<InGamePawn> pawn);
+	void registredNewPawn(std::shared_ptr<Pawn> pawn);
 private:
-	std::shared_ptr<InGameTileMap> tileMap; //Допишем графическую часть подключим общий класс
+	std::shared_ptr<TileMap> tileMap; 
 	std::shared_ptr<GameMode> gameMode;
-	std::vector<std::shared_ptr<InGamePawn>> pawnList; //Допишем графическую часть подключим общий класс
+	std::vector<std::shared_ptr<Pawn>> pawnList; 
+public:
+	std::shared_ptr<TileMap> getTileMap();
+	std::vector<std::shared_ptr<Pawn>>& getPawnList();
 };

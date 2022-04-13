@@ -50,7 +50,7 @@ sf::Vector2i HumanPlayer::screenCoordsToGame(sf::Vector2i screenCoords)
 	//Если честно вся функция один большой костыль
 	auto pMap = tileMap.lock();
 	sf::Vector2i mapSize = pMap->getSize();
-	sf::Vector2i tileSizeInScreen = { 600 / mapSize.x , 800 / mapSize.y };
+	sf::Vector2i tileSizeInScreen = { 800 / mapSize.x , 600 / mapSize.y };
 	sf::Vector2i gameCoords = { screenCoords.x / tileSizeInScreen.x, screenCoords.y / tileSizeInScreen.y };
 	return gameCoords;
 }

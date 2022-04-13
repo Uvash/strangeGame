@@ -25,6 +25,12 @@
     <Filter Include="Исходные файлы\Game\Players">
       <UniqueIdentifier>{2facdb9b-3896-4395-a85e-1f242c88d108}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Файлы заголовков\Render">
+      <UniqueIdentifier>{8e4228e4-074c-4c7b-8f66-f8e0c2973a17}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\Render">
+      <UniqueIdentifier>{bc388324-b1e4-4976-b670-c192de5cb2b6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -63,6 +69,18 @@
     <ClCompile Include="RenderController.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
+    <ClCompile Include="Render\RenderedTileMap.cpp">
+      <Filter>Исходные файлы\Render</Filter>
+    </ClCompile>
+    <ClCompile Include="TileMap.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="Render\RenderedPawn.cpp">
+      <Filter>Исходные файлы\Render</Filter>
+    </ClCompile>
+    <ClCompile Include="Pawn.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="App.h">
@@ -99,6 +117,18 @@
       <Filter>Файлы заголовков\Game\Players</Filter>
     </ClInclude>
     <ClInclude Include="RenderController.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\RenderedTileMap.h">
+      <Filter>Файлы заголовков\Render</Filter>
+    </ClInclude>
+    <ClInclude Include="TileMap.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\RenderedPawn.h">
+      <Filter>Файлы заголовков\Render</Filter>
+    </ClInclude>
+    <ClInclude Include="Pawn.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>

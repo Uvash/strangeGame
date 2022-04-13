@@ -101,3 +101,8 @@ char Tile::getTileCode()
 
 	return temp;
 }
+
+const GameColor& Tile::getColor() const
+{
+	return gameColor;
+}

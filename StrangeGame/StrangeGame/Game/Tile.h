@@ -39,4 +39,5 @@ public:
 	}
 
 	char getTileCode(); //для показа в консоль, удалить если не надо.
+	const GameColor& getColor() const;
 };

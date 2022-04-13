@@ -11,6 +11,7 @@ class GameController;
 class EventController;
 class InGameTileMap;
 class InGamePawn;
+class Pawn;
 class APlayer;
 enum class GameColor;
 
@@ -22,7 +23,7 @@ public:
 	~GameMode();
 
 	void connectToTileMap(std::shared_ptr<InGameTileMap> tileMap);
-	void connectToPawns(std::vector<std::shared_ptr<InGamePawn>> pawnList);
+	void connectToPawns(std::vector<std::shared_ptr<Pawn>> pawnList);
 
 	bool addPawnInGame(sf::Vector2i coordinats, GameColor color);
 	bool checkMove(sf::Vector2i start, sf::Vector2i target);
