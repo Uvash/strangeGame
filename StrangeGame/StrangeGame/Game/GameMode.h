@@ -14,7 +14,13 @@ class InGamePawn;
 class Pawn;
 class APlayer;
 enum class GameColor;
-
+enum class GameStatus
+{
+	gameContinue,
+	Draw,
+	WhiteWin,
+	BlackWin
+};
 class GameMode final
 {
 public:
@@ -27,16 +33,22 @@ public:
 
 	bool addPawnInGame(sf::Vector2i coordinats, GameColor color);
 	bool checkMove(sf::Vector2i start, sf::Vector2i target);
+	int possibleMoveCountForTile(sf::Vector2i targetTile);
 	bool movePawn(sf::Vector2i start, sf::Vector2i target);
-	
+	GameStatus checkWin();
+	GameStatus getStatus();
+	void sawpPlayers();
 private:
 
 	EventController& eventController;
 	GameController& gameController;
 	std::weak_ptr<InGameTileMap> inGameTileMap;
 	std::vector<std::weak_ptr<InGamePawn>> inGamePawns;
+	int currentPlayer = 0;
 	std::vector<std::shared_ptr<APlayer>> players;
+	GameStatus gameStatus = GameStatus::gameContinue();
 public:
+
 	void addPlayers();
 	void AddPawnsAtMap();
 

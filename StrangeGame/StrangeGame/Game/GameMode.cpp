@@ -71,14 +71,115 @@ bool GameMode::checkMove(sf::Vector2i start, sf::Vector2i target)
 	return false;
 }
 
+int GameMode::possibleMoveCountForTile(sf::Vector2i targetTile)
+{
+	int moveCount{ 0 };
+	//проверяем все возможные движения для тайла
+	if (checkMove(targetTile, { targetTile.x + 1, targetTile.y })) moveCount++;
+	if (checkMove(targetTile, { targetTile.x - 1, targetTile.y })) moveCount++;
+	if (checkMove(targetTile, { targetTile.x, targetTile.y + 1 })) moveCount++;
+	if (checkMove(targetTile, { targetTile.x, targetTile.y - 1 })) moveCount++;
+	
+	return moveCount;
+}
+
 bool GameMode::movePawn(sf::Vector2i start, sf::Vector2i target)
 {
 	if (!checkMove(start, target))
 		return false;
-
+	assert(!inGameTileMap.expired());
 	auto map = inGameTileMap.lock();
 	map->swapPawns(start, target);
 	map->printMap();
+}
+
+GameStatus GameMode::checkWin()
+{
+	assert(!inGameTileMap.expired());
+	auto map = inGameTileMap.lock();
+
+	//мы должны проверить все точки вокруг, что бы удостоверится в победе...
+	sf::Vector2i whiteTarget{ 6,6 }; 
+	sf::Vector2i blackTarget{ 1,1 };
+	int searchRadius = 1;
+	int requstedPointsToWin = 9;
+	//Количество союзных пешек в победной зоне.
+	int whiteVictoryPoints{ 0 };
+	int blackVictoryPoints{ 0 };
+	//Количество блокированных пешек. Пешки в победной зоне не учитываются.
+	int whiteDrawPoints{ 0 };
+	int blackDrawPoints{ 0 };
+
+	sf::Vector2i distanceToTarget;
+
+	for (auto weakPawn : inGamePawns)
+	{
+		assert(!weakPawn.expired());
+		auto pawn = weakPawn.lock();
+		switch (pawn->getGameColor())
+		{
+			case (GameColor::white): 
+			{ 
+				distanceToTarget = { std::abs(pawn->getCoordinats().x - whiteTarget.x) ,  std::abs(pawn->getCoordinats().y - whiteTarget.y) };
+				if (distanceToTarget.x <= searchRadius && distanceToTarget.y <= searchRadius) // пешка в зоне победы
+				{
+					whiteVictoryPoints++;
+				}
+				else // пешка в не зоны победы
+				{
+					if (possibleMoveCountForTile(pawn->getCoordinats()) == 0)
+						whiteDrawPoints++;
+				}
+				break;
+			}
+
+			case (GameColor::black): 
+			{
+				distanceToTarget = { std::abs(pawn->getCoordinats().x - blackTarget.x) ,  std::abs(pawn->getCoordinats().y - blackTarget.y) };
+				if (distanceToTarget.x <= searchRadius && distanceToTarget.y <= searchRadius) // пешка в зоне победы
+				{
+					blackVictoryPoints++;
+				}
+				else // пешка в не зоны победы
+				{
+					if (possibleMoveCountForTile(pawn->getCoordinats()) == 0)
+						blackDrawPoints++;
+				}
+				break;
+			}
+		default:
+			break;
+		}
+
+	}
+	//хоть игра и пошаговая (как следствие выйграть может только один), думаю преимущество белых в первом ходе стоит хоть чуть-чуть нивелировать
+	if (blackVictoryPoints == requstedPointsToWin)
+		return GameStatus::BlackWin;
+	if (whiteVictoryPoints == requstedPointsToWin)
+		return GameStatus::WhiteWin;
+	
+	if (whiteVictoryPoints + whiteDrawPoints == requstedPointsToWin) //Часть пешек прибыла в зону победы, а остальные блокированы.
+	{
+		return GameStatus::Draw;
+	}
+	if (blackVictoryPoints + blackDrawPoints == requstedPointsToWin)
+	{
+		return GameStatus::Draw;
+	}
+
+	return GameStatus::gameContinue;
+}
+
+GameStatus GameMode::getStatus()
+{
+	return gameStatus;
+}
+
+void GameMode::sawpPlayers()
+{
+	currentPlayer++;
+	if (currentPlayer >= players.size())
+		currentPlayer = 0;
 }
 
 void GameMode::addPlayers()
@@ -103,8 +204,10 @@ void GameMode::tick()
 {
 	sf::Vector2i start;
 	sf::Vector2i finish;
-	if (players[0]->makeMove(start, finish) == gameMoveStatus::move)
+	if (players[currentPlayer]->makeMove(start, finish) == gameMoveStatus::move && gameStatus == GameStatus::gameContinue)
 	{
 		movePawn(start, finish);
+		gameStatus = checkWin();
+		sawpPlayers();
 	}
 }
