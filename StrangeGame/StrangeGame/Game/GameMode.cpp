@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include <math.h>
+#include <iostream>
 #include "GameMode.h"
 #include "GameController.h"
 #include "InGameTileMap.h"
@@ -170,9 +171,34 @@ GameStatus GameMode::checkWin()
 	return GameStatus::gameContinue;
 }
 
-GameStatus GameMode::getStatus()
+GameStatus GameMode::getGameStatus()
 {
 	return gameStatus;
+}
+void GameMode::printGameStatus()
+{
+	std::cout << std::endl;
+	switch (gameStatus)
+	{
+		case(GameStatus::gameContinue) :
+		{
+			std::cout << "Game Continue!" << std::endl; break;
+		}
+		case(GameStatus::Draw):
+		{
+			std::cout << "Draw!" << std::endl; break;
+		}
+		case(GameStatus::WhiteWin):
+		{
+			std::cout << "White Win!" << std::endl; break;
+		}
+		case(GameStatus::BlackWin):
+		{
+			std::cout << "Black Win" << std::endl; break;
+		}
+	default:
+		break;
+	}
 }
 
 void GameMode::sawpPlayers()
@@ -202,12 +228,18 @@ void GameMode::AddPawnsAtMap()
 
 void GameMode::tick()
 {
-	sf::Vector2i start;
-	sf::Vector2i finish;
-	if (players[currentPlayer]->makeMove(start, finish) == gameMoveStatus::move && gameStatus == GameStatus::gameContinue)
+	if (gameStatus == GameStatus::gameContinue)
 	{
-		movePawn(start, finish);
-		gameStatus = checkWin();
-		sawpPlayers();
+		sf::Vector2i start;
+		sf::Vector2i finish;
+		if (players[currentPlayer]->makeMove(start, finish) == gameMoveStatus::move)
+		{
+			movePawn(start, finish);
+			gameStatus = checkWin();
+			sawpPlayers();
+		}
+		if (gameStatus != GameStatus::gameContinue)
+			printGameStatus();
 	}
+	
 }

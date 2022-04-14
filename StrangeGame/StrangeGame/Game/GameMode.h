@@ -35,9 +35,11 @@ public:
 	bool checkMove(sf::Vector2i start, sf::Vector2i target);
 	int possibleMoveCountForTile(sf::Vector2i targetTile);
 	bool movePawn(sf::Vector2i start, sf::Vector2i target);
-	GameStatus checkWin();
-	GameStatus getStatus();
 	void sawpPlayers();
+
+	GameStatus checkWin();
+	GameStatus getGameStatus();
+	void printGameStatus(); 
 private:
 
 	EventController& eventController;
