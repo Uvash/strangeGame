@@ -2,7 +2,7 @@
 #include "App.h"
 #include <ctime>
 
-App::App() : window{ sf::VideoMode(800, 600), "StrangeGame" } , eventController(window), renderController(window, gameController)
+App::App() : window{ sf::VideoMode(800, 600), "StrangeGame", sf::Style::Titlebar | sf::Style::Close }, eventController(window), renderController(window, gameController)
 {
 
 }
