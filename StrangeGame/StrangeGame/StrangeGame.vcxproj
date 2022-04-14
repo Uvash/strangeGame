@@ -158,6 +158,7 @@
     <ClCompile Include="Game\GameMode.cpp" />
     <ClCompile Include="Game\InGameTileMap.cpp" />
     <ClCompile Include="Game\InGamePawn.cpp" />
+    <ClCompile Include="Game\Players\AIPlayer.cpp" />
     <ClCompile Include="Game\Players\HumanPlayer.cpp" />
     <ClCompile Include="Game\Tile.cpp" />
     <ClCompile Include="main.cpp">
@@ -180,6 +181,7 @@
     <ClInclude Include="Game\GameMode.h" />
     <ClInclude Include="Game\InGameTileMap.h" />
     <ClInclude Include="Game\InGamePawn.h" />
+    <ClInclude Include="Game\Players\AIPlayer.h" />
     <ClInclude Include="Game\Players\HumanPlayer.h" />
     <ClInclude Include="Game\Tile.h" />
     <ClInclude Include="HelpGlobalStructures.h" />

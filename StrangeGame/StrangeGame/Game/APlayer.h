@@ -20,6 +20,6 @@ public:
 
 	const GameColor & getColor();
 	void setColor(const GameColor& newColor);
-private:
+protected:
 	GameColor color;
 };

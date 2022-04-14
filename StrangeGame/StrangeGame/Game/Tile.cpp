@@ -106,3 +106,11 @@ const GameColor& Tile::getColor() const
 {
 	return gameColor;
 }
+
+const GameColor Tile::getPawnColor() const
+{
+	if (pPawn.expired()) //заместо кода ошибки ибо MinColor соответствует белому
+		return GameColor::maxColor;
+	auto pawn = pPawn.lock();
+	return pawn->getGameColor();
+}

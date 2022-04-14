@@ -81,6 +81,9 @@
     <ClCompile Include="Pawn.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
+    <ClCompile Include="Game\Players\AIPlayer.cpp">
+      <Filter>Исходные файлы\Game\Players</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="App.h">
@@ -130,6 +133,9 @@
     </ClInclude>
     <ClInclude Include="Pawn.h">
       <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Players\AIPlayer.h">
+      <Filter>Файлы заголовков\Game\Players</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

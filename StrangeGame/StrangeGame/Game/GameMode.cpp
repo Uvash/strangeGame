@@ -8,6 +8,7 @@
 #include "Pawn.h"
 #include "Tile.h"
 #include "Players/HumanPlayer.h"
+#include "Players/AIPlayer.h"
 
 GameMode::GameMode(GameController& newGameController, EventController& NewEventController) :	gameController{ newGameController }, eventController{ NewEventController } {}
 
@@ -42,6 +43,21 @@ bool GameMode::addPawnInGame(sf::Vector2i coordinats, GameColor color)
 		return true;
 	}
 	
+	return false;
+}
+
+bool GameMode::canCurrentPlayerInteract(sf::Vector2i target)
+{
+	auto map = inGameTileMap.lock();
+
+	if (!map->inRange(target))
+		return false;
+
+	auto Tile = map->getTile(target);
+	
+
+	if (Tile.getPawnColor() == players[currentPlayer]->getColor())
+		return true;
 	return false;
 }
 
@@ -86,6 +102,8 @@ int GameMode::possibleMoveCountForTile(sf::Vector2i targetTile)
 
 bool GameMode::movePawn(sf::Vector2i start, sf::Vector2i target)
 {
+	if(!canCurrentPlayerInteract(start))
+		return false;
 	if (!checkMove(start, target))
 		return false;
 	assert(!inGameTileMap.expired());
@@ -212,6 +230,9 @@ void GameMode::addPlayers()
 {
 	auto humPlayer = std::make_shared<HumanPlayer>(GameColor::white, eventController, inGameTileMap);
 	players.push_back(std::static_pointer_cast<APlayer>(humPlayer));
+
+	auto aiPlayer = std::make_shared<AIPlayer>(GameColor::black, inGamePawns);
+	players.push_back(std::static_pointer_cast<APlayer>(aiPlayer));
 }
 
 void GameMode::AddPawnsAtMap() 
@@ -234,9 +255,11 @@ void GameMode::tick()
 		sf::Vector2i finish;
 		if (players[currentPlayer]->makeMove(start, finish) == gameMoveStatus::move)
 		{
-			movePawn(start, finish);
-			gameStatus = checkWin();
-			sawpPlayers();
+			if (movePawn(start, finish))
+			{
+				gameStatus = checkWin();
+				sawpPlayers();
+			}
 		}
 		if (gameStatus != GameStatus::gameContinue)
 			printGameStatus();

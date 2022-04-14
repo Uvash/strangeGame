@@ -32,9 +32,11 @@ public:
 	void connectToPawns(std::vector<std::shared_ptr<Pawn>> pawnList);
 
 	bool addPawnInGame(sf::Vector2i coordinats, GameColor color);
+	bool canCurrentPlayerInteract(sf::Vector2i target);
 	bool checkMove(sf::Vector2i start, sf::Vector2i target);
 	int possibleMoveCountForTile(sf::Vector2i targetTile);
 	bool movePawn(sf::Vector2i start, sf::Vector2i target);
+
 	void sawpPlayers();
 
 	GameStatus checkWin();
